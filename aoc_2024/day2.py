@@ -1,18 +1,19 @@
 import os
 
-def is_safe(reports: list[int]) -> bool:
-    report_pairs = list(zip(reports, reports[1:]))
-    pair_growth = []
-
-    # Capture growth, returning false if growth differs by less than one or more than 3
-    for (curr, next) in report_pairs:
-        curr_growth = curr - next
-        if abs(curr_growth) < 1 or abs(curr_growth) > 3:
-            return False
-        pair_growth.append(curr - next)
-
+def check_growth(pair_growth: list[int]):
     # Check for increasing or decreasing growth invariants
-    return all(x == 1 or x == 2 or x == 3 for x in pair_growth) or all(x == -1 or x == -2 or x == -3 for x in pair_growth)
+    increasing = [x == 1 or x == 2 or x == 3 for x in pair_growth].count(True)
+    decreasing = [x == -1 or x == -2 or x == -3 for x in pair_growth].count(True)
+
+    return increasing == len(pair_growth) or decreasing == len(pair_growth)
+
+def is_safe(reports: list[int]) -> bool:
+    for i, _ in enumerate(reports):
+        remove_step = reports[:i] + reports[i+1 :]
+        report_pairs = list(zip(remove_step, remove_step[1:]))
+        pair_growth = [curr - next for (curr, next) in report_pairs]
+        if check_growth(pair_growth):
+            return True
 
 
 
