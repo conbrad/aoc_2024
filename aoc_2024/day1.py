@@ -1,12 +1,14 @@
 import os
-def compute_distance(list1, list2):
+def part_one(list1, list2):
+    # Returns the difference between elements across both lists
     assert len(list1) == len(list2)
     total_distance = 0
     for x, y in zip(list1, list2):
         total_distance += abs(x - y)
     return total_distance
 
-def compute_similarity(list1, list2):
+def part_two(list1, list2):
+    # Returns the similarity score of elements across both lists
     assert len(list1) == len(list2)
     location_counts = {}
     for y in list2:
@@ -18,7 +20,6 @@ def compute_similarity(list1, list2):
         similarity_score += x * location_counts.get(x, 0)
 
     return similarity_score
-
 
 
 if __name__ == "__main__":
@@ -33,6 +34,6 @@ if __name__ == "__main__":
 
     list1.sort()
     list2.sort()
-    print(compute_distance(list1, list2))
-    print(compute_similarity(list1, list2))
+    print(part_one(list1, list2))
+    print(part_two(list1, list2))
 
